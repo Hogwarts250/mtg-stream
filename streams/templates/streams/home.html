@@ -1,0 +1,10 @@
+{% extends "streams/base.html" %} {% load bootstrap4 %}
+
+{% block content %}
+<div class="container-fluid">
+    <a href="{% url 'create_game' %}">create game</a>
+    <a href="{% url 'join_game' %}">join game</a>
+</div>
+
+
+{% endblock content %}
