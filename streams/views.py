@@ -1,8 +1,10 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-from django.template import loader
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 
 import cv2
+
+from .forms import GameForm
 
 # Create your views here.
 class VideoCamera(object):
@@ -29,25 +31,21 @@ while True:
 """
 
 def home(request):
-    template = loader.get_template("streams/home.html")
-    context = {}
-
-    return HttpResponse(template.render(context, request))
+    return render(request, "streams/home.html")
 
 def create_game(request):
-    template = loader.get_template("streams/create_game.html")
-    context = {}
+    if request.method == "POST":
+        return HttpResponseRedirect(reverse("streams:home"))
 
-    return HttpResponse(template.render(context, request))
+    else:
+        form = GameForm()
+
+    context = {"form": form}
+    
+    return render(request, "streams/create_game.html", context)
 
 def join_game(request):
-    template = loader.get_template("streams/join_game.html")
-    context = {}
-    
-    return HttpResponse(template.render(context, request)) 
+    return render(request, "streams/join_game.html")
 
 def game(request, game_id):
-    template = loader.get_template("streams/game.html")
-    context = {"game_id": game_id}
-
-    return HttpResponse(template.render(context, template))
+    return render(request, "streams/game.html")

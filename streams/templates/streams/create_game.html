@@ -1,1 +1,8 @@
 {% extends "streams/base.html" %} {% load bootstrap4 %}
+
+{% block content %}
+<form action="{% url 'streams:create_game' %}" method="post" class="form">
+    {% csrf_token %}
+    <button name="submit">create game</button>
+</form>
+{% endblock content %}
