@@ -3,6 +3,8 @@
 {% block content %}
 <form action="{% url 'streams:create_game' %}" method="post" class="form">
     {% csrf_token %}
-    <button name="submit">create game</button>
+    <label for="id_num_players">Number of Players: </label>
+    <input type="number" name="num_players" id="id_num_players" required>
+    <input type="submit" value="create game"/>
 </form>
 {% endblock content %}

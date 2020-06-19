@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     "bootstrap4",
+    "channels",
 
     # user-created apps
     "streams",
@@ -123,3 +124,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Channels
+ASGI_APPLICATION = 'website.routing.application'
+
+CHANNEL_LAYERS = {
+    "default": {
+        "CONFIG": {
+            "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')],
+        },
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+    },
+}

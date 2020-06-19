@@ -1,1 +1,10 @@
 {% extends "streams/base.html" %} {% load bootstrap4 %}
+
+{% block content %}
+<form action="{% url 'streams:join_game' %}" method="get" class="form">
+    {% csrf_token %}
+    <label for="id_game_id">Game ID: </label>
+    <input type="text" name="game_id" id="id_game_id" required>
+    <input type="submit" value="join game"/>
+</form>
+{% endblock content %}
