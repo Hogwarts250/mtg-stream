@@ -28,9 +28,9 @@ class VideoCamera(object):
         while True:
             (self.grabbed, self.frame) = self.cap.read()
 
-cap = VideoCamera()
-
 def gen_frame(cam):
+    cap = VideoCamera()
+    
     while True:
         # yield the output frame in the byte format
         frame = cap.get_frame()
@@ -71,4 +71,6 @@ def join_game(request):
     return render(request, "streams/join_game.html")
 
 def game(request, game_id):
-    return render(request, "streams/game.html")
+    context = {"game_id": game_id}
+
+    return render(request, "streams/game.html", context)

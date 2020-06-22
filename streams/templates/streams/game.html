@@ -1,1 +1,34 @@
 {% extends "streams/base.html" %} {% load bootstrap4 %}
+
+{% block content %}
+<video id="webcam" width="480" height="360"></video>
+
+{{ game_id|json_script:"game_id" }}
+<script>
+    const gameID = JSON.parse(document.getElementById("game_id").textContent);
+
+    const gameSocket = new WebSocket(
+        "ws://"
+        + window.location.host
+        + "/ws/game/"
+        + gameID
+        + "/"
+    );
+
+    window.addEventListener("load", function() {
+        var webcam = document.getElementById("webcam");
+        var constraints = {audio:true, video:true};
+
+        if (navigator.mediaDevices) {
+            navigator.mediaDevices.getUserMedia(constraints)
+            .then(function onSuccess(stream) {
+                webcam.srcObject = stream;
+                webcam.autoplay = true;
+            })
+            .catch(function onFailure(error) {
+                alert(JSON.stringify(error))
+            })
+        }
+    }, false);
+</script>
+{% endblock content %}

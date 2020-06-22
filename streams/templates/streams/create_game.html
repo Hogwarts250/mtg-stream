@@ -1,6 +1,8 @@
 {% extends "streams/base.html" %} {% load bootstrap4 %}
 
 {% block content %}
+
+
 <form action="{% url 'streams:create_game' %}" method="post" class="form">
     {% csrf_token %}
     <label for="id_num_players">Number of Players: </label>

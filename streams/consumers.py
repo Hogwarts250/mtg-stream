@@ -6,7 +6,7 @@ from .models import Game
 
 class VideoConsumer(WebsocketConsumer):
     def connect(self):
-        self.game_id = self.scope["url_route"]["kwargs"]["room_name"]
+        self.game_id = self.scope["url_route"]["kwargs"]["game_id"]
         self.game_id_name = "game_%s" % self.game_id
 
         # join game group
@@ -42,6 +42,6 @@ class VideoConsumer(WebsocketConsumer):
         image = event["image"]
 
         # Send image to WebSocket
-        self.send(text_data=json.dumps({
+        self.send(image_data=json.dumps({
             "image": image
         }))
