@@ -9,7 +9,7 @@ var gameSocket = null;
 var constraints = {audio: true, video: true};
 
 window.addEventListener("load", function() {
-  gameSocket = new WebSocket("ws://" + window.location.host + "/ws/game/" + gameID + "/");
+  gameSocket = new WebSocket("wss://" + window.location.host + "/ws/game/" + gameID + "/");
 
   connect()
 }, false);
