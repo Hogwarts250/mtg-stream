@@ -24,24 +24,44 @@ class VideoConsumer(WebsocketConsumer):
             self.channel_name
         )
 
-    # receive image from WebSocket
-    def receive(self, image_data):
-        image_data_json = json.loads(image_data)
-        image = image_data_json["image"]
+    # receive mesage from WebSocket
+    def receive(self, text_data):
+        msg_data_json = json.loads(text_data)
+        msg_type = msg_data_json["type"]
 
-        # send image to game group
+        if msg_type == "new-ice-candidate":
+            msg = msg_data_json["candidate"]
+        
+        else:
+            msg = msg_data_json["sdp"]
+
+        # send mesage to game group
         async_to_sync(self.channel_layer.group_send)(
             self.game_id_name,
             {
-                "type": "image_feed",
-                "image": image
+                "type": "message",
+                "msg_type": msg_type,
+                "msg": msg
             }
         )
 
-    def image_feed(self, event):
-        image = event["image"]
+    def message(self, event):
+        msg_type = event["msg_type"]
+        msg = event["msg"]
 
-        # Send image to WebSocket
-        self.send(image_data=json.dumps({
-            "image": image
-        }))
+        # send message to WebSocket
+        if msg_type == "new-ice-candidate":
+            self.send(text_data=json.dumps(
+                {
+                "type": msg_type,
+                "candidate": msg
+                }
+            ))
+
+        else:
+            self.send(text_data=json.dumps(
+                {
+                "type": msg_type,
+                "sdp": msg
+                }
+            ))

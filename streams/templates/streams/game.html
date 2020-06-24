@@ -1,34 +1,12 @@
-{% extends "streams/base.html" %} {% load bootstrap4 %}
+{% extends "streams/base.html" %} {% load bootstrap4 %} {% load static %}
 
 {% block content %}
-<video id="webcam" width="480" height="360"></video>
-
 {{ game_id|json_script:"game_id" }}
-<script>
-    const gameID = JSON.parse(document.getElementById("game_id").textContent);
+<script type="text/javascript" src="{% static 'streams/video-client.js' %}"></script>
 
-    const gameSocket = new WebSocket(
-        "ws://"
-        + window.location.host
-        + "/ws/game/"
-        + gameID
-        + "/"
-    );
-
-    window.addEventListener("load", function() {
-        var webcam = document.getElementById("webcam");
-        var constraints = {audio:true, video:true};
-
-        if (navigator.mediaDevices) {
-            navigator.mediaDevices.getUserMedia(constraints)
-            .then(function onSuccess(stream) {
-                webcam.srcObject = stream;
-                webcam.autoplay = true;
-            })
-            .catch(function onFailure(error) {
-                alert(JSON.stringify(error))
-            })
-        }
-    }, false);
-</script>
+<p>local video</p>
+<video id="local_video" width="480" height="360" autoplay muted></video>
+<p>remote video</p>
+<video id="remote_video" width="480" height="360" autoplay></video>
+<input type="button" name="invite" value="Invite" onclick="invite()">
 {% endblock content %}
