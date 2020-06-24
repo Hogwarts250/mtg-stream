@@ -2,8 +2,6 @@ from channels.generic.websocket import WebsocketConsumer
 from asgiref.sync import async_to_sync
 import json
 
-from .models import Game
-
 class VideoConsumer(WebsocketConsumer):
     def connect(self):
         self.game_id = self.scope["url_route"]["kwargs"]["game_id"]

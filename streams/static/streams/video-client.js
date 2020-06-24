@@ -9,45 +9,12 @@ var gameSocket = null;
 var constraints = {audio: true, video: true};
 
 window.addEventListener("load", function() {
+  gameSocket = new WebSocket("ws://" + window.location.host + "/ws/game/" + gameID + "/");
+
   connect()
 }, false);
 
-function log(text) {
-  var time = new Date();
-
-  console.log("[" + time.toLocaleTimeString() + "] " + text);
-}
-
-function log_error(text) {
-  var time = new Date();
-
-  console.trace("[" + time.toLocaleTimeString() + "] " + text);
-}
-
-function reportError(errMessage) {
-  log_error(`Error ${errMessage.name}: ${errMessage.message}`);
-}
-
-function handleGetUserMediaError(err) {
-  log_error(err);
-  switch(err.name) {
-    case "NotFoundError":
-      alert("Unable to open your call because no camera and/or microphone" +
-            "were found.");
-      break;
-    case "SecurityError":
-    case "PermissionDeniedError":
-      // Do nothing; this is the same as the user canceling the call.
-      break;
-    default:
-      alert("Error opening your camera and/or microphone: " + err.message);
-      break;
-  }
-}
-
 function connect() {
-  gameSocket = new WebSocket("ws://" + window.location.host + "/ws/game/" + gameID + "/");
-
   gameSocket.onerror = function(evt) {
     console.dir(evt);
   }
@@ -87,7 +54,7 @@ async function createPeerConnection() {
   log("Setting up a peer connection...")
 
   gamePeerConnection = new RTCPeerConnection({
-    iceServers: [     // Information about ICE servers - Use your own!
+    iceServers: [
       {
         urls: "stun:stun.stunprotocol.org"
       }
@@ -255,4 +222,37 @@ function handleICECandidateEvent(event) {
 function handleTrackEvent(event) {
   log("*** Track event");
   document.getElementById("remote_video").srcObject = event.streams[0];
+}
+
+function log(text) {
+  var time = new Date();
+
+  console.log("[" + time.toLocaleTimeString() + "] " + text);
+}
+
+function log_error(text) {
+  var time = new Date();
+
+  console.trace("[" + time.toLocaleTimeString() + "] " + text);
+}
+
+function reportError(errMessage) {
+  log_error(`Error ${errMessage.name}: ${errMessage.message}`);
+}
+
+function handleGetUserMediaError(err) {
+  log_error(err);
+  switch(err.name) {
+    case "NotFoundError":
+      alert("Unable to open your call because no camera and/or microphone" +
+            "were found.");
+      break;
+    case "SecurityError":
+    case "PermissionDeniedError":
+      // Do nothing; this is the same as the user canceling the call.
+      break;
+    default:
+      alert("Error opening your camera and/or microphone: " + err.message);
+      break;
+  }
 }

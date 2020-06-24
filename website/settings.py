@@ -137,3 +137,6 @@ CHANNEL_LAYERS = {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
     },
 }
+
+# Activate Django-Heroku.
+django_heroku.settings(locals())
