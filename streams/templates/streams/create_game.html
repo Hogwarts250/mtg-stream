@@ -1,8 +1,12 @@
 {% extends "streams/base.html" %} {% load bootstrap4 %} {% load static %}
 
 {% block content %}
-<video id="local_video" width="480" height="360" autoplay muted></video>
 <script src="{% static 'streams/video-feed.js' %}"></script>
+
+<video id="local_video" width="480" height="360" autoplay muted></video>
+
+<label for="video_source">Video Source: </label><select id="video_source"></select>
+<label for="audio_source">Audio Source: </label><select id="audio_source"></select>
 
 <form action="{% url 'streams:create_game' %}" method="post" class="form">
     {% csrf_token %}
