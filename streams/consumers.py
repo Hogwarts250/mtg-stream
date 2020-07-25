@@ -29,9 +29,15 @@ class VideoConsumer(WebsocketConsumer):
 
         if msg_type == "new-ice-candidate":
             msg = msg_data_json["candidate"]
+            sender = msg_data_json["sender"]
         
+        elif msg_type == "new-member":
+            msg = msg_data_json["new_member"]
+            sender = None
+
         else:
             msg = msg_data_json["sdp"]
+            sender = msg_data_json["sender"]
 
         # send mesage to game group
         async_to_sync(self.channel_layer.group_send)(
@@ -39,20 +45,31 @@ class VideoConsumer(WebsocketConsumer):
             {
                 "type": "message",
                 "msg_type": msg_type,
-                "msg": msg
+                "msg": msg,
+                "sender": sender
             }
         )
 
     def message(self, event):
         msg_type = event["msg_type"]
         msg = event["msg"]
+        sender = event["sender"]
 
         # send message to WebSocket
         if msg_type == "new-ice-candidate":
             self.send(text_data=json.dumps(
                 {
                 "type": msg_type,
-                "candidate": msg
+                "candidate": msg,
+                "sender": sender
+                }
+            ))
+
+        elif msg_type == "new-member":
+            self.send(text_data=json.dumps(
+                {
+                    "type": msg_type,
+                    "new_member": msg
                 }
             ))
 
@@ -60,6 +77,7 @@ class VideoConsumer(WebsocketConsumer):
             self.send(text_data=json.dumps(
                 {
                 "type": msg_type,
-                "sdp": msg
+                "sdp": msg,
+                "sender": sender
                 }
             ))

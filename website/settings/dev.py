@@ -142,18 +142,9 @@ CHANNEL_LAYERS = {
     "default": {
         "CONFIG": {
             "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')],
+            "capacity": 1500,
+            "expiry": 10,
         },
         "BACKEND": "channels_redis.core.RedisChannelLayer",
     },
 }
-
-
-# Redis
-"""
-CACHES = {
-    "default": {
-         "BACKEND": "redis_cache.RedisCache",
-         "LOCATION": os.environ.get('REDIS_URL'),
-    }
-}
-"""

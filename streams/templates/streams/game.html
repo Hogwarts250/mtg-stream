@@ -2,13 +2,11 @@
 
 {% block content %}
 {{ game_id|json_script:"game_id" }}
-<script type="text/javascript" src="{% static 'streams/video-client.js' %}"></script>
-
 <p>local video</p>
 <video id="local_video" width="480" height="360" autoplay muted></video>
 
 <p>remote video</p>
 <video id="remote_video" width="480" height="360" autoplay></video>
 
-<input type="button" name="invite" value="Invite" onclick="invite()">
+<script type="text/javascript" src="{% static 'streams/index.js' %}"></script>
 {% endblock content %}
