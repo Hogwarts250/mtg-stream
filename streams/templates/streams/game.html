@@ -2,6 +2,9 @@
 
 {% block content %}
 {{ game_id|json_script:"game_id" }}
+{{ video_source|json_script:"video_source" }}
+{{ audio_source|json_script:"audio_source" }}
+
 <p>local video</p>
 <video id="local_video" width="480" height="360" autoplay muted></video>
 

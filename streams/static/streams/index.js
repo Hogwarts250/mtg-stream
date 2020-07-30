@@ -1,4 +1,4 @@
-const gameID = JSON.parse(document.getElementById("game_id").textContent)
+const gameID = JSON.parse(document.getElementById("game_id").textContent);
 const localID = Math.floor((1 + Math.random()) * 0x100000);
 var remoteID = null;
 
@@ -10,25 +10,28 @@ if (document.location.protocol == "https:") {
 const socket = new WebSocket(scheme + "://" + window.location.host + "/ws/game/" + gameID + "/");
 
 var peerConnection = null;
+var polite = true;
+var isNegotiating = false;
 
 const localVideo = document.getElementById("local_video");
 const remoteVideo = document.getElementById("remote_video");
 
-var stream = null;
+const audioSource = JSON.parse(document.getElementById("audio_source").textContent);
+const videoSource = JSON.parse(document.getElementById("video_source").textContent);
 
 const constraints = {
-  audio: true, video: true
+  audio: {deviceId: audioSource},
+  video: {deviceId: videoSource}
 };
 
-var polite = true;
-var isNegotiating = false;
+var stream = null;
 
 window.onload = (evt) => {
   navigator.mediaDevices.getUserMedia(constraints)
   .then((media) => {
     localVideo.srcObject = media
     stream = media
-  })
+  });
 }
 
 socket.onopen = function(evt) {
@@ -39,10 +42,12 @@ socket.onopen = function(evt) {
 }
 
 socket.onerror = function(err) {
-  logError(err);
+  // console.log(err);
 }
 
 socket.onmessage = function(evt) {
+  // console.log(stream)
+
   let msg = JSON.parse(evt.data);
 
   if (msg.type == "new-member") {
@@ -73,7 +78,7 @@ function createPeerConnection() {
   peerConnection = new RTCPeerConnection({
     iceServers: [
       {
-        urls: "stun:stun.l.google.com:19302" // Google's public STUN server
+        urls: "stun:stun.l.google.com:19302"
       }
     ]
   })
@@ -173,6 +178,8 @@ function handleNewMember(msg) {
 }
 
 async function handleVideoOfferMsg(msg) {
+  // console.log("Received video chat offer")
+
   if (!remoteID) {
     remoteID = msg.sender;
   }
@@ -180,8 +187,6 @@ async function handleVideoOfferMsg(msg) {
   if (!peerConnection) {
     createPeerConnection();
   }
-
-  // console.log("Received video chat offer")
 
   try {
     stream.getTracks().forEach(
@@ -269,5 +274,5 @@ function sendToServer(msg) {
 }
 
 function logError(err) {
-  // console.log("*** " + err);
+  console.log("*** " + err);
 }

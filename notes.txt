@@ -1,4 +1,4 @@
-setup:
+local setup:
 1. pip install django django-bootstrap4 channels channels-redis
 2. start Docker daemon
 3. docker run -p 6379:6379 -d redis:5

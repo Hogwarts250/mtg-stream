@@ -22,6 +22,10 @@ app_name = "streams"
 urlpatterns = [
     path("", views.home, name="home"),
     path("create/", views.create_game, name="create_game"),
+
     path("join/", views.join_game, name="join_game"),
+    path("join/<str:game_id>", views.join_game, name="join_game"),
+
     path("game/<str:game_id>", views.game, name="game"),
+    path("game/<str:game_id>/v=<str:video_source>&a=<str:audio_source>", views.game, name="game"),
 ]
