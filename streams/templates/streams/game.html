@@ -5,11 +5,14 @@
 {{ video_source|json_script:"video_source" }}
 {{ audio_source|json_script:"audio_source" }}
 
-<p>local video</p>
-<video id="local_video" width="480" height="360" autoplay muted></video>
+<div class="container-overlay row justify-content-center bg-dark h-100">
+  <div class="col-lg-6 text-center my-auto p-1">
+    <video class="stream" id="local_video" autoplay muted></video>
+  </div>
+  <div class="col-lg-6 text-center my-auto p-1">
+    <video class="stream" id="remote_video" autoplay></video>
+  </div>
+</div>
 
-<p>remote video</p>
-<video id="remote_video" width="480" height="360" autoplay></video>
-
-<script type="text/javascript" src="{% static 'streams/index.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/index.js' %}"></script>
 {% endblock content %}

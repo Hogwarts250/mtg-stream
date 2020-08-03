@@ -1,0 +1,7 @@
+local setup:
+1. env\Scripts\activate
+2. start Docker daemon
+3. docker run -p 6379:6379 -d redis:5
+4. sudo service redis-server restart
+5. sass --watch scss\scss.main css\main.css
+6. python manage.py runserver

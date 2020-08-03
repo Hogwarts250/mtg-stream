@@ -1,22 +1,21 @@
-{% load bootstrap4 %}
-
-{% bootstrap_css %}
-{% bootstrap_javascript jquery="full" %}
-
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        
-        <title>MtG Stream</title>
-    </head>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <title>MtG Stream</title>
 
-    <body>
-        <main>
-            <div class="container-fluid">
-                {% block content %} {% endblock content %}
-            </div>
-        </main>
-    </body>
+    {% load bootstrap4 %} {% load static %}
+    {% bootstrap_javascript jquery='full'%}
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  </head>
+
+  <body>
+    <main role="main">
+      <div class="container-fluid h-100">
+        {% block content %}{% endblock content %}
+      </div>
+    </main>
+  </body>
 </html>
