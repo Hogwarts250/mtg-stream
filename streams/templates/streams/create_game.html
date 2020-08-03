@@ -1,25 +1,38 @@
 {% extends "streams/base.html" %} {% load bootstrap4 %} {% load static %}
 
 {% block content %}
+<div class="container-overlay row justify-content-center bg-dark h-100">
+  <div class="col-lg-8 text-center my-auto px-3 px-lg-5 py-0">
+    <video id="video" autoplay muted></video>
+  </div>
+  <div class="col-lg-4 text-center my-lg-auto px-5 pl-lg-0 pt-lg-3">
+    <div class="card mx-auto">
+      <div class="form bg-light p-3 p-lg-4">
+        <form action="{% url 'streams:create_game' %}" method="post" class="form">
+          {% csrf_token %}
+          <div class="form-group form-row">  
+            <label class="col-sm-4 text-left my-auto" for="id_video_select">Video Source: </label>
+            <select class="form-control col-sm-8 my-auto" id="id_video_select"></select>
+            <input type="text" name="video_source" id="id_video_source" hidden/>
+          </div>
 
-<video id="local_video" width="480" height="360" autoplay muted></video>
+          <div class="form-group form-row">
+            <label class="col-sm-4 text-left my-auto" for="id_audio_select">Audio Source: </label>
+            <select class="form-control col-sm-8 my-auto" id="id_audio_select"></select>
+            <input type="text" name="audio_source" id="id_audio_source" hidden/>  
+          </div>
 
-<form action="{% url 'streams:create_game' %}" method="post" class="form">
-  {% csrf_token %}
+          <div class="form-group form-row">
+            <label class="col-sm-4 text-left my-auto" for="id_num_players">Number of Players: </label>
+            <input class="form-control col-sm-8 my-auto" type="number" name="num_players" id="id_num_players" required/>  
+          </div>
 
-  <label for="id_num_players">Number of Players: </label>
-  <input type="number" name="num_players" id="id_num_players" required/>
+          <input type="submit" class="btn btn-outline-dark" id="id_submit" value="create game"/>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <label for="id_video_select">Video Source: </label>
-  <select id="id_video_select"></select>
-  <input type="text" name="video_source" id="id_video_source" hidden/>
-  
-  <label for="id_audio_select">Audio Source: </label>
-  <select id="id_audio_select"></select>
-  <input type="text" name="audio_source" id="id_audio_source" hidden/>
-
-  <input type="submit" class="btn btn-outline-success" id="id_submit" value="Create Game"/>
-</form>
-
-<script type="text/javascript" src="{% static 'streams/setup.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/setup.js' %}"></script>
 {% endblock content %}
