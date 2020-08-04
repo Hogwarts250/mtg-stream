@@ -42,7 +42,7 @@ socket.onopen = function(evt) {
 }
 
 socket.onerror = function(err) {
-  // console.log(err);
+  logError(err);
 }
 
 socket.onmessage = function(evt) {
@@ -243,7 +243,7 @@ function createOffer() {
 
     peerConnection.setLocalDescription(sdp)
   }, err => {
-    // console.log(`${err.name}: ${err.message}`);
+    logError(err);
   })
 }
 
@@ -258,7 +258,7 @@ function createAnswer() {
 
     peerConnection.setLocalDescription(sdp);
   }, err => {
-    // console.log(`${err.name}: ${err.message}`);
+    logError(err);
   })
 }
 
