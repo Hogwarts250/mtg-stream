@@ -14,7 +14,7 @@
     "type": "git",
     "url": "git+https://github.com/Hogwarts250/mtg_stream.com.git"
   },
-  "author": "",
+  "author": "Felix Zhang <felixfzhang@hotmail.com>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Hogwarts250/mtg_stream.com/issues"

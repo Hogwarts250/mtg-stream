@@ -11,10 +11,10 @@ $video-rotation: 90deg;
 body {
   margin: 0px;
   padding: 0px;
-}
 
-main {
-  height: 100vh;
+  main {
+    height: 100vh;
+  }
 }
 
 video {
@@ -41,39 +41,44 @@ video {
   bottom: 0;
   left: 0;
   overflow: hidden;
-}
+  
+  #video-bg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    -o-transform: translateX(-50%) translateY(-50%);
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    z-index: 0;
+  }
 
-.video-bg {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  min-width: 100%;
-  min-height: 100%;
-  width: auto;
-  height: auto;
-  z-index: 0;
-  -o-transform: translateX(-50%) translateY(-50%);
-  -ms-transform: translateX(-50%) translateY(-50%);
-  -moz-transform: translateX(-50%) translateY(-50%);
-  -webkit-transform: translateX(-50%) translateY(-50%);
-  transform: translateX(-50%) translateY(-50%);
-  z-index: 0;
-}
-
-.mask {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background-color: black;
-  opacity: 0.6;
-  z-index: 1;
+  .mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    opacity: 0.6;
+    z-index: 1;
+  }
 }
 
 .container-overlay {
   position: relative;
   z-index: 2;
+}
+
+.container-drag {
+  cursor: move;
+  float: left;
+  z-index: 4;
 }
 
 @media (max-width: $layout-breakpoint) {

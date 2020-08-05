@@ -2,13 +2,11 @@
 
 {% block content %}
 <div class="fullscreen-bg">
-  <div class="video-bg">
-    <video autoplay loop muted>
-      <source src="{% static 'video/background.mp4' %}">
-    </video>
-  </div>
+  <video id="video-bg" playsinline autoplay loop muted>
+    <source src="{% static 'video/background.mp4' %}">
+  </video>
+  <div class="mask"></div>
 </div>
-<div class="mask"></div>
 <div class="container-fluid container-overlay h-100">
   <div class="d-flex h-100 align-items-center">
     <div class="text-center w-100 my-auto p-2">
